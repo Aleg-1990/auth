@@ -1,3 +1,6 @@
+### Usage
+`php -S localhost:8888 -t web/`
+
 ### Used
  App - Main instance of the application.
  
