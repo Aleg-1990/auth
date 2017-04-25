@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-2">
+                <div class="text-center">
+                    <h1>Welcome, {{ user.login }}.</h1>
+                    <a href="/logout" class="btn btn-primary">Log out</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
