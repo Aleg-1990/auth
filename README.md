@@ -1,5 +1,7 @@
-### Usage
+## Usage
 `php -S localhost:8888 -t web/`
+
+## Main information about application
 
 ### Used
  App - Main instance of the application.
