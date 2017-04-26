@@ -25,7 +25,7 @@ class Authentication
 
     public function register($name, $email, $password)
     {
-        return $this->createUser($name, $email, $password);
+        $this->createUser($name, $email, $password);
     }
 
     /**
@@ -56,11 +56,14 @@ class Authentication
      * @param string $name
      * @param string $email
      * @param string $password
-     *
-     * @return bool Whether user has been created.
      */
     private function createUser($name, $email, $password)
     {
+        $user = new User();
+        $user->setLogin($name);
+        $user->setEmail($email);
+        $user->setPassword(User::hashPassword($password));
+        $user->save();
     }
 
     /**

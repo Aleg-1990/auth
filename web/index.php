@@ -1,8 +1,5 @@
 <?php
 
-ini_set('display_errors', 'On');
-ini_set('error_reporting', E_ALL);
-
 // autoload
 require_once(__DIR__.'/../vendor/autoload.php');
 
@@ -30,7 +27,45 @@ switch ($_SERVER['REQUEST_URI']) {
         }
         break;
     case '/register':
-        print 'register page';
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            $errors = [];
+            if($error = \Validator\Validator::validate($_POST['username'], [\Validator\Constraints\NotEmpty::class])) {
+                $errors['login'][] = $error;
+            }
+            if($error = \Validator\Validator::validate($_POST['email'], [\Validator\Constraints\NotEmpty::class, \Validator\Constraints\Email::class])) {
+                $errors['email'][] = $error;
+            }
+            if($error = \Validator\Validator::validate(
+                $_POST['password'],
+                [
+                    \Validator\Constraints\NotEmpty::class,
+                    \Validator\Constraints\MinPassword::class
+                ]
+            )) {
+                $errors['password'][] = $error;
+            }
+            if($error = \Validator\Validator::validate([$_POST['password'], $_POST['password_repeat']], [\Validator\Constraints\PasswordRepeat::class])) {
+                $errors['password'][] = $error;
+            }
+
+            if(count($errors) === 0) {
+                $app->authentication->register($_POST['username'], $_POST['email'], $_POST['password']);
+                $authenticated = $app->authentication->login($_POST['username'], $_POST['password']);
+                header('Location: /profile');
+            } else {
+                print $twig->render(
+                    'register.html.twig',
+                    [
+                        'errors'          => $errors,
+                        'username'        => $_POST['username'],
+                        'email'           => $_POST['email'],
+                        'password'        => $_POST['password'],
+                        'password_repeat' => $_POST['password_repeat'],
+                    ]);
+            }
+        } else {
+            print $twig->render('register.html.twig');
+        }
         break;
     case '/logout':
         $app->authentication->logout();

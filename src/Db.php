@@ -13,12 +13,7 @@ class Db
     public static function getConnection()
     {
         if(! self::$connection instanceof \PDO) {
-            $config = [
-                'host' => '127.0.0.1',
-                'db_name' => 'test',
-                'db_user' => 'root',
-                'db_password' => '',
-            ];
+            require_once __DIR__.'/../config.php';
 
             // here we can change config
 
