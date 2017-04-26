@@ -24,7 +24,6 @@ Run web server:
 
 ## Main information about application
 
-### Used
  App - Main instance of the application.
  
  Db - Database connection holder
@@ -47,3 +46,4 @@ Run web server:
    - create full-featured ORM, add migrations
  - index.php
    - split into controllers, actions
+ - write unit tests
